@@ -16,12 +16,8 @@
 package org.eclipse.paho.mqttv5.client.internal;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SNIHostName;
-import javax.net.ssl.SNIServerName;
 import javax.net.ssl.SSLParameters;
 import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.net.ssl.SSLSession;
@@ -130,17 +126,17 @@ public class SSLNetworkModule extends TCPNetworkModule {
 		socket.setSoTimeout(this.handshakeTimeoutSecs * 1000);
 
 		// SNI support.  Should be automatic under some circumstances - not all, apparently
-		SSLParameters sslParameters = new SSLParameters();
-		List<SNIServerName> sniHostNames = new ArrayList<SNIServerName>(1);
-		sniHostNames.add(new SNIHostName(host));
-		sslParameters.setServerNames(sniHostNames);
-		((SSLSocket)socket).setSSLParameters(sslParameters);
+//		SSLParameters sslParameters = new SSLParameters();
+//		List<SNIServerName> sniHostNames = new ArrayList<SNIServerName>(1);
+//		sniHostNames.add(new SNIHostName(host));
+//		sslParameters.setServerNames(sniHostNames);
+//		((SSLSocket)socket).setSSLParameters(sslParameters);
 
 		// If default Hostname verification is enabled, use the same method that is used with HTTPS
 		if (this.httpsHostnameVerificationEnabled) {
 			SSLParameters sslParams = new SSLParameters();
 			sslParams.setEndpointIdentificationAlgorithm("HTTPS");
-			((SSLSocket) socket).setSSLParameters(sslParams);	
+			((SSLSocket) socket).setSSLParameters(sslParams);
 		}
 
 		((SSLSocket) socket).startHandshake();
